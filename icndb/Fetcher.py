@@ -2,21 +2,22 @@ __author__ = "Timur Mullayanov"
 
 import urllib.request
 import json
+import icndb.JokeRetriever as Builder
 
 __baseURL__ = 'http://api.icndb.com/'
 
 #TODO: add feature with names replacement
 #NOTE: final name just should be passed as argument to all FETCH functions
-# and correctply be passed to web-DB
+# and correctly be passed to web-DB
 
 def fetchRandom(number=1):
     checkNumber(number) # raise an Exception if number is invalid
-    url = "{}/jokes/random".format(__baseURL__)
+    url = "{}/jokes/random".format(__baseURL__) # replace with call FormURL()
     rawData = {}
     if (number > 1):
-        return _requestJokes("{}/{}".format(url, number))
+        return Builder.buildJokes(_requestJokes("{}/{}".format(url, number)))
     else:
-        return _requestJokes(url)
+        return Builder.buildJokes(_requestJokes(url))
 
 
 def _requestJokes(url):

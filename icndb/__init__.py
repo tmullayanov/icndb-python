@@ -1,5 +1,4 @@
 __author__ = 'Timur Mullayanov'
-#__all__ = ["Joke", "Fetcher"]
 
 # move all API methods and entities to package-level scope.
 from icndb.Fetcher import fetchRandom
