@@ -21,7 +21,7 @@ def fetchRandom(number=1):
 
 
 def _requestJokes(url):
-    return urllib.request.urlopen(url).read().decode('utf-8')
+    return json.loads( urllib.request.urlopen(url).read().decode('utf-8') )
 
 
 def fetchByID():
