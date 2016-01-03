@@ -2,6 +2,7 @@
 import icndb
 
 def main():
+    print("Total amount of jokes: {}".format(icndb.fetchNumberOfJokes()))
     print("Categories: {}".format(icndb.fetchCategories()))
     print("Getting random joke from icndb")
     print(icndb.fetchRandom())
