@@ -9,24 +9,24 @@ __baseURL__ = 'http://api.icndb.com/'
 
 
 def appendNames(url, firstName=None, lastName=None):
-    d = {}
-    if firstName: d['firstName'] = firstName
-    if lastName:  d['lastName']  = lastName
-    return "{}?{}".format(url, urllib.parse.urlencode(d))
+    parameters = {}
+    if firstName: parameters['firstName'] = firstName
+    if lastName:  parameters['lastName']  = lastName
+    return parameters
 
 
-def limitCategories(url, limitTo=None, exclude=None):
+def limitCategories(queryParameters, limitTo=None, exclude=None):
     '''
     Internal function which appends query with limiting categories.
     If limitTo is non-empty list, parameter @exclude will be ignored.
-
-    @returns:
     '''
+
+    tbl = str.maketrans('', '', "'\"")
     if isinstance(limitTo, list):
-        return "{}&{}".format(url, str(limitTo).translate(None, "'"))
-    if isinstance(exclude, list):
-        return "{}&{}".format(url, str(exclude).translate(None, "'"))
-    return url
+        queryParameters['limitTo'] = str(limitTo).translate(tbl)
+    elif isinstance(exclude, list):
+        queryParameters['exclude'] = str(limitTo).translate(tbl)
+    return queryParameters
 
 
 def fetchRandom(number=1, firstName=None, lastName=None,
@@ -38,14 +38,13 @@ def fetchRandom(number=1, firstName=None, lastName=None,
     If parameter number > 1, returns list of Jokes.
     '''
     checkNumber(number) # raise an Exception if number is invalid
-    url = "{}/jokes/random".format(__baseURL__) # replace with call FormURL()
-    url = limitCategories(appendNames(url, firstName, lastName),
+    url = "{}/jokes/random/{}".format(__baseURL__, number if number > 1 else '')
+    queryParameters = limitCategories(appendNames(url, firstName, lastName),
                              limitTo, exclude)
-    rawData = {}
-    if (number > 1):
-        return Builder.buildJokes(_requestJokes("{}/{}".format(url, number)))
-    else:
-        return Builder.buildJokes(_requestJokes(url))
+    if queryParameters:
+        url = "{}?{}".format(url, urllib.parse.urlencode(queryParameters))
+
+    return Builder.buildJokes(_requestJokes(url))
 
 
 def _requestJokes(url):
@@ -55,12 +54,10 @@ def _requestJokes(url):
 def fetchByID(id, firstName=None, lastName=None):
     checkNumber(id)
     url = "{}/jokes/{}".format(__baseURL__, id)
-    url = appendNames(url, firstName, lastName)
-    rawData = {}
-    if (id > 1):
-        return Builder.buildJokes(_requestJokes("{}/{}".format(url, id)))
-    else:
-        return Builder.buildJokes(_requestJokes(url))
+    queryParameters = appendNames(url, firstName, lastName)
+    if queryParameters:
+        url += "?{}".format(urllib.parse.urlencode(queryParameters))
+    return Builder.buildJokes(_requestJokes(url))
 
 
 def checkNumber(n):
