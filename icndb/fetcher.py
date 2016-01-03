@@ -1,5 +1,3 @@
-__author__ = "Timur Mullayanov"
-
 import urllib.request
 import urllib.parse
 import json

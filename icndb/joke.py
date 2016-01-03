@@ -1,6 +1,3 @@
-__author__ = 'Timur Mullayanov'
-
-
 class Joke(object):
     '''
     Class represents joke from ICNDB.
@@ -8,7 +5,7 @@ class Joke(object):
 
     Attributes:
         id (int): identifier of the Joke in web-database.
-        text (str): the text of the joke. 
+        text (str): the text of the joke.
     '''
     __slots__ = ("_id", "_text")
 
