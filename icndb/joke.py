@@ -5,6 +5,10 @@ class Joke(object):
     '''
     Class represents joke from ICNDB.
     All the fields are READ-ONLY.
+
+    Attributes:
+        id (int): identifier of the Joke in web-database.
+        text (str): the text of the joke. 
     '''
     __slots__ = ("_id", "_text")
 

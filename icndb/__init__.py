@@ -1,13 +1,12 @@
 __author__ = 'Timur Mullayanov'
 
 # move all API methods and entities to package-level scope.
-from icndb.Fetcher import fetchRandom, fetchByID, fetchCategories
-from icndb.Joke import Joke as Joke_
+from icndb.fetcher import fetchRandom, fetchByID, \
+fetchCategories, fetchNumberOfJokes
+from icndb.joke import Joke
 
-del Fetcher
-del Joke
-
-Joke = Joke_
-del Joke_
+del fetcher
+del joke_extractor
+del joke
 
 print("Module initialized!")

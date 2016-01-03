@@ -4,7 +4,7 @@ In case data isn't correct ('type' != success), special exception is raised
 '''
 
 import json
-from icndb.Joke import Joke
+from icndb.joke import Joke
 
 class JokeNotRetrieved(ValueError): pass
 
@@ -14,6 +14,7 @@ def _check(JSON):
 
 
 def buildJokes(jsonRsp):
+    '''Parses content of recieved json to icndb.Joke (or list of them)'''
     _check(jsonRsp)
     value = jsonRsp['value']
     if isinstance(value, list):
